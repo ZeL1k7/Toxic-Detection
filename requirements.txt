@@ -1,0 +1,7 @@
+gunicorn
+gdown
+flask==2.1.3
+torch==1.13.0
+transformers==4.24.0
+pandas==1.3.5
+tqdm==4.64.1
