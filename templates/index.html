@@ -2,7 +2,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>{{ search_engine_name }}</title>
+    <title>Toxic Detection</title>
     <meta charset="utf-8">
     <style>
         #content {
@@ -84,16 +84,16 @@
 
 <div id="content">
     <div class="centered">
-        <div id='title'>{{ toxic_detection }}</div>
+        <div id='title'>Toxic Detection</div>
         <form style='padding: 0px; padding-top: 18px;' method = 'GET'>
             <input type='text' style='border-radius: 12px; border: 1px solid lightgrey; width:546px; font-size: 20px; padding: 2px; padding-left: 8px;' name='query' value='{{ query }}'>
-            <input type='submit' style='font-size: 20px; border-radius: 12px; border: 1px solid lightgrey; background: #F9F9F9;' value='Search'>
+            <input type='submit' style='font-size: 20px; border-radius: 12px; border: 1px solid lightgrey; background: #F9F9F9;' value='detect'>
         </form>
 
         <hr style='border: none; border-bottom: 1px solid lightgrey; margin-bottom: 20px; margin-top: 20px'>
 
         {% if query != '' %}
-        <div style='font-size:16px; text-align: left;'>It's {{answer}} documents with confidence {{ probs }}%.</div>
+        <div style='font-size:26px; text-align: left;'>It's {{answer}} documents with confidence {{ probs }}%.</div>
         {% endif %}
     </div>
 </div>
