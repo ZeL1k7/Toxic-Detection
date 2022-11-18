@@ -19,7 +19,8 @@ class ToxicDataset(Dataset):
     
     
 def load_toxic_model(path='state_dict.pt'):
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     model = ToxicModel()
-    model.load_state_dict(torch.load(path))
+    model.load_state_dict(torch.load(path, map_location=torch.device(device=device)))
     model.eval()
     return model

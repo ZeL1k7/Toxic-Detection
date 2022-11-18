@@ -8,7 +8,8 @@ from transformers import AutoTokenizer, AutoModel
 class ToxicModel(nn.Module):
     def __init__(self):
         super().__init__()
-        self.bert = AutoModel.from_pretrained("DeepPavlov/rubert-base-cased")
+        self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
+        self.bert = AutoModel.from_pretrained("DeepPavlov/rubert-base-cased").to(self.device)
         self.tokenizer = AutoTokenizer.from_pretrained("DeepPavlov/rubert-base-cased")
         self.classifier = nn.Linear(768, 1)
 
@@ -19,8 +20,8 @@ class ToxicModel(nn.Module):
 
     def forward(self, X):
         with torch.no_grad():
-            encoded = self.tokenizer(X, padding=True, truncation=True, max_length=512, return_tensors='pt')
+            encoded = self.tokenizer(X, padding=True, truncation=True, max_length=512, return_tensors='pt').to(self.device)
             output = self.bert(**encoded)
         embedding = self.mean_pooling(output, encoded['attention_mask'])
-        embedding = F.normalize(embedding, p=2, dim=1)
+        embedding = F.normalize(embedding, p=2, dim=1).to(self.device)
         return self.classifier(embedding)
