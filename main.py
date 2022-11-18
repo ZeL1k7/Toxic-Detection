@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from predict import get_prediction
+import json
 
 
 app = Flask(__name__, template_folder='.')
@@ -8,14 +9,16 @@ app = Flask(__name__, template_folder='.')
 @app.route('/', methods=['GET'])
 def index():
     query = request.args.get('query')
-
     if query is None:
         query = ''
-        probs = 0,
-        answer = 'no'
+        answer = ['None', 'NaN']
     else:
-        probs = get_prediction(query)
-        answer = ('toxic', float(probs)) if probs > 0.5 else ('not toxic', 1-float(probs))
+        filepath = get_prediction(query)
+        with open(filepath, 'r') as f:
+            json_items = json.load(f)
+        answer = ('toxic', float(json_items['probalities'])) if json_items['probalities'] > 0.5 \
+            else ('not toxic', 1-float(json_items['probalities']))
+
     return render_template(
         'templates/index.html',
         answer=answer[0],

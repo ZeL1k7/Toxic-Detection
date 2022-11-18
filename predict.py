@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 from utils import load_toxic_model
+import json
 
 
 def get_prediction(text):
@@ -8,4 +9,6 @@ def get_prediction(text):
     with torch.no_grad():
         logits = model(text)
         probs = F.sigmoid(logits)
-    return probs.item()
+    with open('prediction.json', 'w') as f:
+        json.dump({'logits': logits.item(), 'probalities': probs.item()}, f)
+    return 'prediction.json'
