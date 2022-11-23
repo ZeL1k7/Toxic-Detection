@@ -8,9 +8,6 @@ from utils import load_toxic_model
 
 
 class ToxicClassifer(Resource):
-    """
-    Потом напишу :)
-    """
     def __init__(self):
         self.model = self.make_pt_model('state_dict.pt')
         self.output_filepath = 'predictions.json'
@@ -48,6 +45,4 @@ class ToxicClassifer(Resource):
         # сохраняем наши предсказания в json file
         with open(self.output_filepath, 'w+') as file:
             json.dump({'logits': logits, 'probabilities': probs}, file)
-        # возвращаем названия json в случае успешного выполнения
         return self.output_filepath
-    
